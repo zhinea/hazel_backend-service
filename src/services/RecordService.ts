@@ -1,45 +1,64 @@
 import { AppDataSource } from '../data-source';
 import { Record } from '../entities/Record';
-import { User } from '../entities/User';
 
 export class RecordService {
     private recordRepository = AppDataSource.getRepository(Record);
-    private userRepository = AppDataSource.getRepository(User);
 
-    async getAllRecords() {
-        return this.recordRepository.find({ relations: ['user'] });
+    async getAllRecords(userId: string) {
+        return this.recordRepository.find({
+            where: { user_id: userId }
+        });
     }
 
-    async getRecordById(id: string) {
+    async getRecordById(id: string, userId: string) {
         return this.recordRepository.findOne({
-            where: { id },
-            relations: ['user'],
+            where: {
+                id,
+                user_id: userId
+            }
         });
     }
 
     async createRecord(recordData: {
         userId: string;
         name: string;
-        timestamp: Date;
         tabUrl: string;
         events: object;
     }) {
-        const user = await this.userRepository.findOneBy({ id: recordData.userId });
-        if (!user) throw new Error('User not found');
-
         const record = this.recordRepository.create({
             ...recordData,
-            user,
+            user_id: recordData.userId,
+            timestamp: new Date()
         });
         return this.recordRepository.save(record);
     }
 
-    async updateRecord(id: string, recordData: Partial<Record>) {
+    async updateRecord(id: string, userId: string, recordData: Partial<Record>) {
+        // Check if record exists and belongs to the user
+        const record = await this.recordRepository.findOne({
+            where: {
+                id,
+                user_id: userId
+            }
+        });
+
+        if (!record) throw new Error('Record not found or access denied');
+
         await this.recordRepository.update(id, recordData);
         return this.recordRepository.findOneBy({ id });
     }
 
-    async deleteRecord(id: string) {
+    async deleteRecord(id: string, userId: string) {
+        // Check if record exists and belongs to the user
+        const record = await this.recordRepository.findOne({
+            where: {
+                id,
+                user_id: userId
+            }
+        });
+
+        if (!record) throw new Error('Record not found or access denied');
+
         return this.recordRepository.delete(id);
     }
 }

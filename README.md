@@ -1,15 +1,5 @@
-# browser-recorder-api
+# Hazel: The World first Cloud-based Browser Recorder
 
-To install dependencies:
+Hazel is a browser extension that allows you to record your browsing sessions and save them to the cloud.
 
-```bash
-bun install
-```
 
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.1.42. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.

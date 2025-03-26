@@ -2,7 +2,6 @@ import {type Context, Hono, type Next} from 'hono';
 import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
 import { AppDataSource } from './data-source';
-import { RecordController } from './controllers/RecordController';
 import {AuthController} from "./controllers/auth/AuthController.ts";
 import { oidcAuthMiddleware, getAuth } from '@hono/oidc-auth'
 import { ManagementClient } from 'auth0';
