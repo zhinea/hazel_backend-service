@@ -1,4 +1,8 @@
-import {type Context, Hono, type Next} from 'hono';
+import * as path from "node:path";
+import dotenv from "dotenv";
+dotenv.config({ path: path.join(__dirname, '.env') });
+
+import {Hono} from 'hono';
 import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
 import { AppDataSource } from './data-source';

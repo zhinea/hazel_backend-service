@@ -18,6 +18,7 @@
     "@hono/zod-validator": "^0.4.3",
     "@workos-inc/node": "^7.44.0",
     "auth0": "^4.20.0",
+    "dotenv": "^16.4.7",
     "hono": "^4.7.5",
     "hono-rate-limiter": "^0.4.2",
     "openai": "^4.90.0",
