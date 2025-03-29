@@ -19,6 +19,7 @@ recordRoute.use('*', requireAuth);
 // Record routes
 recordRoute.get('/', (c) => recordController.getAllRecords(c));
 recordRoute.post('/', (c) => recordController.createRecord(c));
+recordRoute.post('/:id/events', (c) => recordController.addRecordEvent(c));
 recordRoute.get('/:id', (c) => recordController.getRecord(c));
 recordRoute.put('/:id', (c) => recordController.updateRecord(c));
 recordRoute.delete('/:id', (c) => recordController.deleteRecord(c));

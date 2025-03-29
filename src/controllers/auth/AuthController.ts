@@ -1,6 +1,7 @@
 // src/controllers/auth/AuthController.ts
 import type {Context} from "hono";
 import {processOAuthCallback, revokeSession} from "@hono/oidc-auth";
+import {deleteCookie} from "hono/cookie";
 
 export class AuthController {
     async callback(c: Context){
@@ -9,7 +10,8 @@ export class AuthController {
 
     async logout(c: Context){
         await revokeSession(c)
-        return c.redirect('/')
+        deleteCookie(c, 'oidc-auth')
+        return c.redirect('/good-bye')
     }
 
     async me(c: Context){
@@ -27,8 +29,8 @@ export class AuthController {
             name: user.name,
             nickname: user.nickname,
             avatar: user.picture,
-            last_login: user.last_login,
-            created_at: user.created_at,
+            last_login: user?.last_login,
+            created_at: user?.created_at,
         })
     }
 }

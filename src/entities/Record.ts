@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, type Relation} from 'typeorm';
-import { User } from './User';
+import type {arrayOutputType} from "zod";
 
 @Entity({
     name: 'records'
@@ -21,5 +21,8 @@ export class Record {
     tabUrl: string;
 
     @Column('json')
-    events: object;
+    events: Array<any>;
+
+    @Column('json')
+    settings: Object;
 }

@@ -1,9 +1,9 @@
-import type {GetUsers200ResponseOneOfInner} from "auth0/dist/cjs/management/__generated/models";
 import type {ManagementClient} from "auth0";
+import type {UserInterface} from "./src/types/user.ts";
 
 declare module 'hono' {
     interface ContextVariableMap {
-        user: GetUsers200ResponseOneOfInner|null;
+        user: UserInterface
         auth0: ManagementClient;
     }
 }

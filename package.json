@@ -3,6 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
+    "@types/auth0": "^3.3.10",
     "@types/bun": "latest"
   },
   "peerDependencies": {
@@ -10,13 +11,18 @@
   },
   "dependencies": {
     "@clerk/backend": "^1.25.6",
+    "@express-rate-limit/cluster-memory-store": "^0.3.1",
     "@hono/clerk-auth": "^2.0.0",
     "@hono/node-server": "^1.14.0",
     "@hono/oidc-auth": "^1.6.0",
+    "@hono/zod-validator": "^0.4.3",
     "@workos-inc/node": "^7.44.0",
     "auth0": "^4.20.0",
     "hono": "^4.7.5",
+    "hono-rate-limiter": "^0.4.2",
+    "openai": "^4.90.0",
     "pg": "^8.14.1",
+    "precise-memory-rate-limit": "^2.0.1",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.21",
     "zod": "^3.24.2"

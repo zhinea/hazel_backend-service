@@ -23,8 +23,10 @@ export class RecordService {
         userId: string;
         name: string;
         tabUrl: string;
-        events: object;
+        events: Array<any>;
+        settings: Object;
     }) {
+        console.log(recordData)
         const record = this.recordRepository.create({
             ...recordData,
             user_id: recordData.userId,
@@ -46,6 +48,24 @@ export class RecordService {
 
         await this.recordRepository.update(id, recordData);
         return this.recordRepository.findOneBy({ id });
+    }
+
+    async addRecordEvent(id: string, userId: string, events: Array<Object>) {
+        // Check if record exists and belongs to the user
+        const record = await this.recordRepository.findOne({
+            where: {
+                id,
+                user_id: userId
+            }
+        });
+
+        if (!record) throw new Error('Record not found or access denied');
+
+        events.forEach(event => {
+            record.events.push(event);
+        })
+
+        return this.recordRepository.save(record);
     }
 
     async deleteRecord(id: string, userId: string) {

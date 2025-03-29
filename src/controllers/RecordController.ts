@@ -1,10 +1,42 @@
 import type {Context} from 'hono';
 import { RecordService } from '../services/RecordService';
-import { recordSchema, recordUpdateSchema } from '../schema/record.schema';
+import {addRecordEventSchema, recordSchema, recordUpdateSchema} from '../schema/record.schema';
 import { ZodError } from 'zod';
 
 export class RecordController {
     private recordService = new RecordService();
+
+    async addRecordEvent(context: Context) {
+        try {
+            const user = context.get('user');
+            if (!user) {
+                return context.json({ error: 'Authentication required' }, 401);
+            }
+
+            const id = context.req.param('id');
+            const body = await context.req.json();
+
+            // Validate with Zod
+            try {
+                const validatedData = addRecordEventSchema.parse(body);
+                const record = await this.recordService.addRecordEvent(id, user.user_id, validatedData.events);
+                return record
+                    ? context.json(record)
+                    : context.json({ error: 'Record not found' }, 404);
+            } catch (err) {
+                if (err instanceof ZodError) {
+                    return context.json({
+                        error: 'Validation failed',
+                        details: err.errors
+                    }, 400);
+                }
+                throw err;
+            }
+        } catch (error) {
+            return context.json({ error: error.message }, 400);
+        }
+    }
+
 
     async getAllRecords(context: Context) {
         try {
@@ -98,6 +130,7 @@ export class RecordController {
             return context.json({ error: error.message }, 400);
         }
     }
+
 
     async deleteRecord(context: Context) {
         try {
