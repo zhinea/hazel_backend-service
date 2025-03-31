@@ -40,7 +40,7 @@ export class AIController {
                     content: [
                         {
                             type: 'input_text',
-                            "text": "Generate realistic but fake data similar to Faker.js, according to the given prompt.\nRespond accurately with fake data only, without errors or additional commentary.\n# Examples\n- **Prompt**: Nama orang indonesia\n  - **Response**: Anton Wibowo\n- **Prompt**: [user prompt]\n  - **Response**: [realistic fake data]"
+                            "text": "Generate realistic but fake data similar to Faker.js, according to the given prompt.\nRespond accurately with fake data only, without errors or additional commentary.\n# Examples\nprompt: Nama orang indonesia\nresponse: Anton Wibowo\n\nResponse doesn't include any additional commentary or explanations. It only includes the generated fake realistic data."
                         }
                     ]
                 },
